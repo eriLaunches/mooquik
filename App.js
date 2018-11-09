@@ -8,7 +8,9 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList} from 'react-native';
+import axios from 'axios'
 
+const API_KEY = 'AIzaSyBWm5aQTSWyffTokyKlsX03j7d9hIgH7Q0'
 type Props = {};
 
 export default class App extends Component {
@@ -53,6 +55,31 @@ export default class App extends Component {
     catch (error) {console.log(error)}
   }
 
+  getOCR = async () => {
+    let body = {
+      "requests": [
+        {
+          "image": {
+            "source": {
+              "imageUri": "https://s3-media4.fl.yelpcdn.com/bphoto/LrkXX1pBqanN7StrzS-FiA/o.jpg" //image URL
+            }
+          },
+          "features": [
+            {
+              "type": "TEXT_DETECTION",
+              "maxResults": 1
+            }
+          ]
+        }
+      ]
+    }
+    try {
+      let response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`,
+       body)
+      console.log('GOOGLE', response)
+   }
+   catch (error) {console.log(error)}
+  }
 
   render() {
 
@@ -68,6 +95,7 @@ export default class App extends Component {
 
         <Button title="Post Milk" onPress={this.postItem}  />
         <Button title="Get Milk" onPress={this.getItem} />
+        <Button title="Get OCR" onPress={this.getOCR} />
 
       </View>
 
