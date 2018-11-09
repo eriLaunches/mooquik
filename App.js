@@ -83,45 +83,46 @@ export default class App extends Component {
 
   //post request to GOOGLE CLOUD VISION api using axios.post which returns an array with the text parsed
   //GOAL: Loop through that array and find milk
-  getOCR =  () => {
-  //   let body = {
-  //     "requests": [
-  //       {
-  //         "image": {
-  //           //USE FOR PUBLIC URLS OR GOOGLE CLOUD STORED IMAGES
-  //           // "source": {
-  //           //   "imageUri": "file:///Users/ericaluong/Desktop/GrocerAlert2/milk_receipt.jpg" //image URL
-  //           // }
-  //           "content":BASE_64
-  //         },
-  //         "features": [
-  //           {
-  //             "type": "TEXT_DETECTION",
-  //             "maxResults": 1
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  //   try {
-  //     let response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`,
-  //      body)
-  //     console.log('GOOGLE', response)
-  //  }
-  //  catch (error) {console.log(error)}
+  getOCR =  async () => {
+    let body = {
+      "requests": [
+        {
+          "image": {
+            //USE FOR PUBLIC URLS OR GOOGLE CLOUD STORED IMAGES
+            "source": {
+              "imageUri": "https://firebasestorage.googleapis.com/v0/b/grocerlert.appspot.com/o/milk_receipt_2.jpg?alt=media&token=8c4e577e-14fd-44c5-b56e-7e526eb00257" //image URL
+            }
+            // "content":BASE_64
+          },
+          "features": [
+            {
+              "type": "TEXT_DETECTION",
+              "maxResults": 1
+            }
+          ]
+        }
+      ]
+    }
+    try {
+      let response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`,
+       body)
+      console.log('GOOGLE', response)
+      console.log('GOOGLE FULL TEXT ANNOT', response.data.responses[0].fullTextAnnotation.text)
+   }
+   catch (error) {console.log(error)}
 
     //   LOOP THRU RESPONSE HERE
     //  IF MILK IS FOUND, RETURN TRUE
     //  ELSE RETURN FALSE
     //  when switching to OCR, use respones.data and put back async and await
-     let OCR_fullTextAnnotation = OCR_RESPONSE.data.responses[0].fullTextAnnotation.text
-     console.log('OCR_fullTextAnnotation:', OCR_fullTextAnnotation)
-     let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
-     console.log('OCR_lowerCase:', OCR_fullTextAnnotation)
-     if (OCR_lowerCase.includes('milk')) {
-       return true
-     }
-     else return false
+    //  let OCR_fullTextAnnotation = OCR_RESPONSE.data.responses[0].fullTextAnnotation.text
+    //  console.log('OCR_fullTextAnnotation:', OCR_fullTextAnnotation)
+    //  let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
+    //  console.log('OCR_lowerCase:', OCR_fullTextAnnotation)
+    //  if (OCR_lowerCase.includes('milk')) {
+    //    return true
+    //  }
+    //  else return false
 
   }
 
