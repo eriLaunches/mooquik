@@ -42,7 +42,8 @@ class GetOCRButton extends Component {
           console.log('OCR Found milk')
           return true
          }
-         else return false
+         else {alert('No Milk Found On Your Receipt')}
+
    }
    catch (error) {console.log(error)}
   }

@@ -1,23 +1,28 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import AddView from '../components/AddView.js'
+import ListView from '../components/ListView.js'
+
 
 
 class HomeScreen extends React.Component {
   render() {
+    console.log("navigation",this.props.navigation)
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
+      // <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <View>
+        <ListView />
       </View>
     );
   }
 }
 
-class SettingsScreen extends React.Component {
+class AddItem extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
+        <AddView />
       </View>
     );
   }
@@ -25,5 +30,5 @@ class SettingsScreen extends React.Component {
 
 export default createBottomTabNavigator({
   Home: HomeScreen,
-  Settings: SettingsScreen,
+  'GotMilk?': AddItem,
 });
