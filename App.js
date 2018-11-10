@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList} from 'react-native';
 import axios from 'axios'
-import Firebase from './components/Firebase.js'
+// import Firebase from './components/Firebase.js'
 import ImageSelection from './components/ImageSelection.js'
 
 //why not uploading?
@@ -151,7 +151,7 @@ export default class App extends Component {
         <Button title="Post Milk" onPress={this.postItem}  />
         <Button title="Get Milk" onPress={this.getItem} />
         <Button title="Get OCR" onPress={this.getOCR} />
-        <Firebase />
+        {/* <Firebase /> */}
         <ImageSelection />
       </View>
 
