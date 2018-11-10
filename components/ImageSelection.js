@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 var ImagePicker = require('react-native-image-picker')
 import {StyleSheet, Text, View, TouchableOpacity, Image, Button} from 'react-native'
 import Firebase from './Firebase.js'
+import GetOCRButton from './GetOCRButton.js';
 
 
 class ImageSelection extends Component {
@@ -54,6 +55,7 @@ class ImageSelection extends Component {
     console.log("avatarSource",this.state.avatarSource)
     return (
       <View>
+      <GetOCRButton receipt={this.state.base64}/>
       <Firebase receipt={this.state.base64}/>
       <Image source={this.state.avatarSource} style={{width:50, height:50, margin:10}}/>
       <TouchableOpacity style={{backgroundColor:'green', margin:10, padding:10}} onPress={this.pickImage}>
