@@ -35,7 +35,6 @@ class Fire extends Component {
   }
   render() {
     console.log('FIREBASE PROPS', this.props)
-    console.log('hEREEREE')
     return (
       <Button title="Upload to Firebase Cloud" onPress={this.uploadToCloud}/>
      );

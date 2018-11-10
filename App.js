@@ -12,8 +12,9 @@ import axios from 'axios'
 // import Firebase from './components/Firebase.js'
 import ImageSelection from './components/ImageSelection.js'
 import GetOCRButton from './components/GetOCRButton.js'
+import AppNavigator from './navigation/AppNavigator.js';
 
-//why not uploading?
+
 const API_KEY = 'AIzaSyBWm5aQTSWyffTokyKlsX03j7d9hIgH7Q0'
 let OCR_RESPONSE = {
   data: {
@@ -33,6 +34,7 @@ type Props = {};
 export default class App extends Component {
   state = {
     groceryItems: []
+
   }
 
   //invokes OCR (GOOGLE VISION API), if milk is found in the response body, then post request using
@@ -149,11 +151,11 @@ export default class App extends Component {
       }
       />
 
-        <Button title="Post Milk" onPress={this.postItem}  />
+        <Button title="Post Milk" onPress={this.postItem} />
         <Button title="Get Milk" onPress={this.getItem} />
 
-        {/* <Firebase /> */}
         <ImageSelection />
+        <AppNavigator />
       </View>
 
     );
@@ -164,9 +166,9 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,

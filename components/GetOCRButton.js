@@ -39,7 +39,8 @@ class GetOCRButton extends Component {
       console.log('GOOGLE FULL TEXT ANNOT', OCR_fullTextAnnotation)
       let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
       if (OCR_lowerCase.includes('milk')) {
-           return true
+          console.log('OCR Found milk')
+          return true
          }
          else return false
    }

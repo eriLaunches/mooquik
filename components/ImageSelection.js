@@ -24,7 +24,6 @@ class ImageSelection extends Component {
       chooseFromLibraryButtonTitle: 'Choose photo from Library'
     }
     // alert('clicked')
-    console.log("HERE",ImagePicker)
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
