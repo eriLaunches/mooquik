@@ -1,21 +1,17 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList} from 'react-native';
 import AppNavigator from './navigation/AppNavigator.js';
+import HeaderBar from './components/HeaderBar.js'
 
 type Props = {};
 
 export default class App extends Component {
   state = {
-
-
   }
-
-
-
   render() {
-
     return (
       <View style={styles.container}>
+        <HeaderBar />
         <AppNavigator />
       </View>
 

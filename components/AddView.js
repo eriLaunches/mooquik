@@ -32,9 +32,9 @@ class AddView extends Component {
   //Prompts user to pick an image from their library...OPEN: get them to take a picture
   pickImage() {
     const options = {
-      title: 'my pic app',
+      title: 'Mooquick!',
       takePhotoButtonTitle: 'Take photo with your camera',
-      chooseFromLibraryButtonTitle: 'Choose photo from Library'
+      chooseFromLibraryButtonTitle: 'Choose photo from library'
     }
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
