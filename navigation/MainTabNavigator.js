@@ -1,19 +1,27 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { Text, View, Button } from 'react-native';
+import { createStackNavigator, createBottomTabNavigator, NavigationEvents } from 'react-navigation';
 import AddView from '../components/AddView.js'
 import ListView from '../components/ListView.js'
 
 
 
 class HomeScreen extends React.Component {
+
   render() {
     console.log("navigation",this.props.navigation)
     return (
       // <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-      <View>
-        <ListView />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+         {/* <NavigationEvents
+          onDidBlur={payload => {
+            this.props.navigation.navigate('Entries')
+            console.log("will focus", payload);
+          }}
+        /> */}
+        <AddView navigation={this.props.navigation}/>
       </View>
+
     );
   }
 }
@@ -21,14 +29,20 @@ class HomeScreen extends React.Component {
 class AddItem extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <AddView />
-      </View>
+      <View>
+      <NavigationEvents
+      onfocus={payload => {
+        this.forceUpdate();
+        console.log("will focus", payload);
+      }}
+    />
+      <ListView />
+    </View>
     );
   }
 }
 
 export default createBottomTabNavigator({
   Home: HomeScreen,
-  'GotMilk?': AddItem,
+  Entries: AddItem,
 });

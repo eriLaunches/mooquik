@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {View, Button, FlatList, ScrollView, StyleSheet} from 'react-native';
-// import { List, ListItem, Icon, Header, HeaderIcon } from 'react-native-elements'
-const milkImg = require('./img/milk_icon.png')
-import { Container, Header, Content, List, ListItem, Text, Icon, Left, Body, Right, Switch, Title } from 'native-base';
+import {View, ScrollView, StyleSheet} from 'react-native';
+import { Container, Content, ListItem, Text, Icon, Left, Body, Right } from 'native-base';
 
 
 
@@ -32,10 +30,16 @@ class ListView extends Component {
       groceryItems: [],
       daysTilExp: null
      }
+     this.getItem = this.getItem.bind(this)
   }
 
   componentDidMount() {
     this.getItem()
+  }
+
+  shouldComponentUpdate(nextProps,nextState){
+    console.log('this.shouldComponentUpdate', nextProps)
+    return true
   }
   //gets all the milk entires and expiration dates from firebase with fetch API
   getItem =  async () => {
@@ -87,6 +91,9 @@ class ListView extends Component {
                   <ListItem icon key={item.key}>
                     <Left>
                       {
+                        this.getDays(item.daysExpire) < 0 ?
+                        <Icon active name={iconInv.sad} style={{color:'#E0A458'}} />
+                        :
                         this.getDays(item.daysExpire) <= 2 ?
                         <Icon active name={iconInv.alert} style={{color:'#E87EA1'}} />
                         :<Icon active name={iconInv.milk} style={{color:'#78D5D7'}}/>
@@ -97,6 +104,9 @@ class ListView extends Component {
                     </Body>
                     <Right>
                       {
+                        this.getDays(item.daysExpire) < 0 ?
+                        <Text style={{color:'red', fontFamily:'Avenir'} }>Expired</Text>
+                        :
                         this.getDays(item.daysExpire) === 0 ?
                         <Text style={{color:'#E86252', fontFamily:'Avenir'} }>Expires today!</Text>
                         : this.getDays(item.daysExpire) === 1 ?

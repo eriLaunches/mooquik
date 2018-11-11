@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
-import {Platform, StyleSheet, Text, View, Button, FlatList} from 'react-native';
-import axios from 'axios'
+import {Platform, StyleSheet, View, FlatList, Image} from 'react-native';
+import { Container, Header, Content, Icon, Text, Button } from 'native-base';
+import { NavigationActions } from 'react-navigation';
+
+
+
 var ImagePicker = require('react-native-image-picker')
+
+var cookieMonster = require('./img/cookie_monster.png')
+
 
 const API_KEY = 'AIzaSyBWm5aQTSWyffTokyKlsX03j7d9hIgH7Q0'
 
@@ -27,6 +34,7 @@ class AddView extends Component {
 
      this.pickImage = this.pickImage.bind(this)
   }
+
 
 
   //Prompts user to pick an image from their library...OPEN: get them to take a picture
@@ -105,6 +113,8 @@ class AddView extends Component {
      if (OCR_lowerCase.includes('milk')) {
       console.log('OCR Found milk')
       this.postItem()
+      this.navigateToListView()
+
      }
      else alert('No Milk Found On Your Receipt')
   }
@@ -125,18 +135,52 @@ class AddView extends Component {
     catch (error) {console.log(error)}
   }
 
+
+  navigateToListView() {
+    this.props.navigation.navigate('Entries')
+  }
+
   addDays = function(date, days) {
     date.setDate(date.getDate() + days);
     return date;
   }
 
-
   render() {
+      console.log('AddView Navigation', this.props)
     return (
-        <Button title="Post Milk" onPress={this.pickImage} />
+      <View>
+
+      <Image source={cookieMonster} style={{
+        width:575,
+        height:575,
+        resizeMode:'contain'}}/>
+        <Button bordered dark small primary style={{alignSelf: 'center', marginTop:5, marginleft:5, borderColor:'black'}} onPress={this.pickImage}>
+            <Icon name='ios-camera' style={{color:'#5E4955', fontSize:20}} />
+            <Text style={{color:'#5E4955', fontFamily:'Avenir', fontWeight: 'bold', fontSize:15}}>YES!</Text>
+        </Button>
+      </View>
      );
   }
 }
 
 
 export default AddView;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // backgroundColor: '#F5FCFF',
+  },
+  // welcome: {
+  //   fontSize: 20,
+  //   textAlign: 'center',
+  //   margin: 10,
+  // },
+  // instructions: {
+  //   textAlign: 'center',
+  //   color: '#333333',
+  //   marginBottom: 5,
+  // },
+});
