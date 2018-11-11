@@ -116,7 +116,7 @@ class AddView extends Component {
      if (OCR_lowerCase.includes('milk')) {
       console.log('OCR Found milk')
       this.postItem()
-      this.navigateToListView()
+      // this.navigateToListView()
 
      }
      else alert('No Milk Found On Your Receipt')
@@ -133,8 +133,9 @@ class AddView extends Component {
             daysExpire: this.addDays(new Date(),5)
           })
         })
-        this.navigateToListView()
         console.log('posted to the firebase db')
+        this.navigateToListView()
+
     }
     catch (error) {console.log(error)}
   }
@@ -142,7 +143,7 @@ class AddView extends Component {
 
   async navigateToListView () {
     await this.props.onFetchGroceries()
-    this.props.navigation.navigate('Entries')
+    this.props.navigation.navigate('List')
 
   }
 
@@ -159,7 +160,6 @@ class AddView extends Component {
       console.log('AddView Navigation', this.props)
     return (
       <View>
-
       <Image source={cookieMonster} style={{
         width:575,
         height:575,
