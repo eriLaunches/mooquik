@@ -3,6 +3,9 @@ import {View, ScrollView, StyleSheet, Button} from 'react-native';
 import { Container, Content, ListItem, Text, Icon, Left, Body, Right } from 'native-base';
 import {connect} from 'react-redux'
 import {fetchGroceries} from '../store/reducer.js'
+import Swipeout from 'react-native-swipeout';
+import {removeGrocery} from '../store/reducer.js'
+
 
 // Helper function to format Date (i.e. November 3rd, 2018 )
 const formatDate = (date) => {
@@ -10,7 +13,7 @@ const formatDate = (date) => {
   return dateformat(date, 'd')
 }
 
-
+//Object storing different icons depending on days til expiration
 const iconInv = {
   happy: 'happy',
   sad:'sad',
@@ -18,13 +21,20 @@ const iconInv = {
   alert:'alert'
 }
 
+//Swipe left to delete functionality
+let swipeBtns = [{
+  text: 'Delete',
+  backgroundColor: '#C73E1D',
+  underlayColor: 'white',
+}];
+
 class ListView extends Component {
   constructor(props) {
     super(props)
   }
 
   async componentDidMount() {
-    await this.props.onFetchGroceries()
+    await this.props.actions.onFetchGroceries()
 
   }
 
@@ -36,7 +46,7 @@ class ListView extends Component {
 
 
   render() {
-    console.log("LISTVIEW,", this.props)
+    console.log("LISTVIEW PROPS,", this.props)
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -44,7 +54,12 @@ class ListView extends Component {
             <Content>
               {
                 this.props.groceries.map(item =>
-                  <ListItem icon key={item.key}>
+                  <Swipeout right={[{text: 'Delete',
+                    backgroundColor: '#C73E1D',
+                    underlayColor: 'white',
+                    onPress: () => { this.props.actions.onRemoveGrocery(item)}}]}
+                    key={item.key} backgroundColor='white'>
+                  <ListItem icon >
                     <Left>
                       {
                         this.getDays(item.daysExpire) < 0 ?
@@ -73,6 +88,7 @@ class ListView extends Component {
 
                     </Right>
                   </ListItem>
+                  </Swipeout>
 
                 )
               }
@@ -104,9 +120,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchGroceries: function() {
-      const thunk = fetchGroceries()
-      dispatch(thunk)
+    actions: {
+      onFetchGroceries: function() {
+        const thunk = fetchGroceries()
+        dispatch(thunk)
+      },
+      onRemoveGrocery: function(grocery) {
+        const thunk = removeGrocery(grocery)
+        dispatch(thunk)
+      }
+
     }
   }
 }

@@ -1,19 +1,24 @@
 import axios from 'axios'
-
 const initialState = {
   groceries: []
 }
 
-//ACTION TYPE
+//ACTION TYPES
 export const GOT_GROCERIES = 'GET_GROCERIES'
+export const DELETE_GROCERY = 'DELETE_GROCERY'
 
-//ACTION CREATOR
+//ACTION CREATORS
 export const gotGroceries = (groceries) => ({
   type: GOT_GROCERIES,
   groceries
 })
 
-//THUNK CREATOR
+export const deleteGrocery = (grocery) => ({
+  type: DELETE_GROCERY,
+  grocery
+})
+
+//THUNK CREATORS
 export const fetchGroceries = () =>  {
   return async (dispatch) => {
     try {
@@ -31,19 +36,32 @@ export const fetchGroceries = () =>  {
          dispatch(action)
       }
 
-     catch (err) {
-      console.log(err)
-    }
+     catch (err) { console.log(err) }
+  }
+ }
+
+ export const removeGrocery = (grocery) =>  {
+  return async (dispatch) => {
+    try {
+      console.log("ARE YOU HITTING HERE?", grocery)
+         await axios.delete(`https://grocerlert.firebaseio.com//places/${grocery.key}.json`)
+         const action = deleteGrocery(grocery)
+         dispatch(action)
+      }
+     catch (err) { console.log(err) }
   }
  }
 
 
-
-//REDUCER
+//REDUCERS
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GOT_GROCERIES:
       return { ...state, groceries: action.groceries }
+    case DELETE_GROCERY: {
+      const newGroceries =  state.groceries.filter(grocery => grocery.key !== action.grocery.key)
+      return {...state, groceries:[...newGroceries]}
+    }
     default:
       return state
   }
