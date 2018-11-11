@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import {Platform, StyleSheet, View, FlatList, Image} from 'react-native';
 import { Container, Header, Content, Icon, Text, Button } from 'native-base';
 import { NavigationActions } from 'react-navigation';
-
+import {connect} from 'react-redux'
+import {fetchGroceries} from '../store/reducer.js'
+import axios from 'axios'
 
 
 var ImagePicker = require('react-native-image-picker')
@@ -35,7 +37,9 @@ class AddView extends Component {
      this.pickImage = this.pickImage.bind(this)
   }
 
-
+  // componentDidMount(){
+  //   this.props.onFetchGroceries()
+  // }
 
   //Prompts user to pick an image from their library...OPEN: get them to take a picture
   pickImage() {
@@ -66,7 +70,7 @@ class AddView extends Component {
 
   //Sends receipt image that user picks to the Google Cloud Vision OCR API which returns an object with the text
   // Loop through the object to find if it contains "milk", if it does, invoke the postItem function
-  getOCR =  async () => {
+  getOCR =  () => {
   //   let body = {
   //     "requests": [
   //       {
@@ -104,7 +108,6 @@ class AddView extends Component {
   //  }
   //  catch (error) {console.log(error)}
 
-
     //For Testing: when switching to OCR, put back async and await
      let OCR_fullTextAnnotation = OCR_RESPONSE.data.responses[0].fullTextAnnotation.text
      let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
@@ -130,14 +133,21 @@ class AddView extends Component {
             daysExpire: this.addDays(new Date(),5)
           })
         })
+        this.navigateToListView()
         console.log('posted to the firebase db')
     }
     catch (error) {console.log(error)}
   }
 
 
-  navigateToListView() {
+  async navigateToListView () {
+    await this.props.onFetchGroceries()
     this.props.navigation.navigate('Entries')
+
+  }
+
+  refreshFunction(){
+    this.forceUpdate()
   }
 
   addDays = function(date, days) {
@@ -164,23 +174,29 @@ class AddView extends Component {
 }
 
 
-export default AddView;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: '#F5FCFF',
-  },
-  // welcome: {
-  //   fontSize: 20,
-  //   textAlign: 'center',
-  //   margin: 10,
-  // },
-  // instructions: {
-  //   textAlign: 'center',
-  //   color: '#333333',
-  //   marginBottom: 5,
-  // },
+    flex: 1
+  }
 });
+
+
+const mapStateToProps = (state) => {
+  return {
+    groceries: state.groceries
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchGroceries: function() {
+      const thunk = fetchGroceries()
+      dispatch(thunk)
+    }
+  }
+}
+
+const ConnectAddView = (connect(mapStateToProps, mapDispatchToProps)(AddView))
+
+export default ConnectAddView

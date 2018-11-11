@@ -27,15 +27,12 @@ class HomeScreen extends React.Component {
 }
 
 class AddItem extends React.Component {
+
+
+
   render() {
     return (
       <View>
-      <NavigationEvents
-      onfocus={payload => {
-        this.forceUpdate();
-        console.log("will focus", payload);
-      }}
-    />
       <ListView />
     </View>
     );

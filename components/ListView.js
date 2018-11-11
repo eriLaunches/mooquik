@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet, Button} from 'react-native';
 import { Container, Content, ListItem, Text, Icon, Left, Body, Right } from 'native-base';
-
-
-
-
+import {connect} from 'react-redux'
+import {fetchGroceries} from '../store/reducer.js'
 
 // Helper function to format Date (i.e. November 3rd, 2018 )
 const formatDate = (date) => {
@@ -20,74 +18,32 @@ const iconInv = {
   alert:'alert'
 }
 
-
-const avatarIcon = "http://icons.iconarchive.com/icons/icons8/ios7/256/Food-Milk-icon.png"
-
 class ListView extends Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      groceryItems: [],
-      daysTilExp: null
-     }
-     this.getItem = this.getItem.bind(this)
+    super(props)
   }
 
-  componentDidMount() {
-    this.getItem()
-  }
+  async componentDidMount() {
+    await this.props.onFetchGroceries()
 
-  shouldComponentUpdate(nextProps,nextState){
-    console.log('this.shouldComponentUpdate', nextProps)
-    return true
-  }
-  //gets all the milk entires and expiration dates from firebase with fetch API
-  getItem =  async () => {
-    //fetch api, get request
-
-    const itemsArr = []
-    try {
-       let response = await fetch('https://grocerlert.firebaseio.com//places.json')
-       let parsedRes = await response.json()
-       for (const key in parsedRes) {
-         itemsArr.push({
-           item: parsedRes[key].item,
-           daysExpire: parsedRes[key].daysExpire,
-           key:key
-         })
-       }
-       this.setState({ groceryItems:itemsArr });
-       console.log(this.state)
-    }
-    catch (error) {console.log(error)}
   }
 
   getDays = (expDate) => {
     const todaysDate = formatDate(new Date())
     const dateExpired = formatDate(expDate)
-    return dateExpired-todaysDate
+    return dateExpired - todaysDate
   }
 
 
   render() {
+    console.log("LISTVIEW,", this.props)
     return (
-      // this.state.groceryItems ?
-      //   <FlatList
-      //   style = {styles.container}
-      //   data={this.state.groceryItems}
-      //   renderItem={({item}) =>
-      //       <Text>Item: {item.item} Expires in {item.daysExpire} days</Text>
-      //   }
-      //   />
-      // :
-      //   <View />
-
       <View style={styles.container}>
         <ScrollView>
           <Container>
             <Content>
               {
-                this.state.groceryItems.map(item =>
+                this.props.groceries.map(item =>
                   <ListItem icon key={item.key}>
                     <Left>
                       {
@@ -105,7 +61,7 @@ class ListView extends Component {
                     <Right>
                       {
                         this.getDays(item.daysExpire) < 0 ?
-                        <Text style={{color:'red', fontFamily:'Avenir'} }>Expired</Text>
+                        <Text style={{color:'#E86252', fontFamily:'Avenir'} }>Expired</Text>
                         :
                         this.getDays(item.daysExpire) === 0 ?
                         <Text style={{color:'#E86252', fontFamily:'Avenir'} }>Expires today!</Text>
@@ -120,20 +76,14 @@ class ListView extends Component {
 
                 )
               }
-
-
-        </Content>
-
+            </Content>
           </Container>
         </ScrollView>
       </View>
-
-
      )
   }
 }
 
-export default ListView;
 
 const styles = StyleSheet.create({
   container: {
@@ -145,3 +95,22 @@ const styles = StyleSheet.create({
   }
 
 });
+
+const mapStateToProps = (state) => {
+  return {
+    groceries: state.groceries
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchGroceries: function() {
+      const thunk = fetchGroceries()
+      dispatch(thunk)
+    }
+  }
+}
+
+const ConnecListView = (connect(mapStateToProps, mapDispatchToProps)(ListView))
+
+export default ConnecListView
