@@ -48,11 +48,11 @@ class ListView extends Component {
                     <Left>
                       {
                         this.getDays(item.daysExpire) < 0 ?
-                        <Icon active name={iconInv.sad} style={{color:'#E0A458'}} />
+                        <Icon active name={iconInv.sad} style={{color:'#AFA98D'}} />
                         :
                         this.getDays(item.daysExpire) <= 2 ?
-                        <Icon active name={iconInv.alert} style={{color:'#E87EA1'}} />
-                        :<Icon active name={iconInv.milk} style={{color:'#78D5D7'}}/>
+                        <Icon active name={iconInv.alert} style={{color:'#C73E1D'}} />
+                        :<Icon active name={iconInv.milk} style={{color:'#39A9DB'}}/>
                       }
                     </Left>
                     <Body>
