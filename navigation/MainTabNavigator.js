@@ -9,7 +9,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class HomeScreen extends React.Component {
   render() {
-    console.log("navigation",this.props.navigation)
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 

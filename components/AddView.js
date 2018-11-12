@@ -98,7 +98,7 @@ class AddView extends Component {
       console.log('GOOGLE FULL TEXT ANNOT', OCR_fullTextAnnotation)
       let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
       console.log('OCR LOWER CASE:', OCR_lowerCase)
-      if (OCR_lowerCase.includes('milk')) {
+      if (OCR_lowerCase.includes('milk') || OCR_lowerCase.includes('mlk') ) {
           console.log('OCR Found milk')
           this.postItem()
          }
@@ -116,7 +116,7 @@ class AddView extends Component {
     //  if (OCR_lowerCase.includes('milk')) {
     //   console.log('OCR Found milk')
     //   this.postItem()
-      // this.navigateToListView()
+    //   this.navigateToListView()
 
     //  }
     //  else alert('No Milk Found On Your Receipt')
@@ -157,7 +157,6 @@ class AddView extends Component {
   }
 
   render() {
-      console.log('AddView Navigation', this.props)
     return (
       <View>
       <Image source={cookieMonster} style={{

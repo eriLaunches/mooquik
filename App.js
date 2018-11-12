@@ -13,10 +13,7 @@ class App extends Component {
   state = {
   }
   componentDidMount(){
-    console.log('ADDVIEW',this.props)
-
     this.props.onFetchGroceries()
-    console.log('ADDVIEW',this.props)
   }
 
   render() {
@@ -37,16 +34,6 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: '#F5FCFF',
   },
-  // welcome: {
-  //   fontSize: 20,
-  //   textAlign: 'center',
-  //   margin: 10,
-  // },
-  // instructions: {
-  //   textAlign: 'center',
-  //   color: '#333333',
-  //   marginBottom: 5,
-  // },
 });
 
 const mapStateToProps = (state) => {
