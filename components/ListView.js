@@ -63,10 +63,10 @@ class ListView extends Component {
                     <Left>
                       {
                         this.getDays(item.daysExpire) < 0 ?
-                        <Icon active name={iconInv.sad} style={{color:'#AFA98D'}} />
+                        <Icon active name={iconInv.alert} style={{color:'#C73E1D'}} />
                         :
                         this.getDays(item.daysExpire) <= 2 ?
-                        <Icon active name={iconInv.alert} style={{color:'#C73E1D'}} />
+                        <Icon active name={iconInv.sad} style={{color:'#F2A541'}} />
                         :<Icon active name={iconInv.milk} style={{color:'#39A9DB'}}/>
                       }
                     </Left>
@@ -81,9 +81,10 @@ class ListView extends Component {
                         this.getDays(item.daysExpire) === 0 ?
                         <Text style={{color:'#E86252', fontFamily:'Avenir'} }>Expires today!</Text>
                         : this.getDays(item.daysExpire) === 1 ?
-                          <Text style={{color:'#E86252', fontFamily:'Avenir'} }>Expires in 1 day!</Text>
-                        :
-                        <Text style={{color:'#5E4955', fontFamily:'Avenir'}} >Expires in {this.getDays(item.daysExpire)} days</Text>
+                          <Text style={{color:'#F2A541', fontFamily:'Avenir'} }>Expires in 1 day!</Text>
+                        : this.getDays(item.daysExpire) === 2 ?
+                        <Text style={{color:'#F2A541', fontFamily:'Avenir'} }>Expires in 1 day!</Text>
+                        :<Text style={{color:'#5E4955', fontFamily:'Avenir'}} >Expires in {this.getDays(item.daysExpire)} days</Text>
                       }
 
                     </Right>

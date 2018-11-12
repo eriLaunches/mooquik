@@ -203,7 +203,7 @@ class AddView extends Component {
         </ScrollView>
         <Button bordered dark small primary style={{alignSelf: 'center', marginBottom:20, marginleft:5, borderColor:'black'}} onPress={this.pickImage}>
             <Icon name='ios-camera' style={{color:'#5E4955', fontSize:20}} />
-            <Text style={{color:'#5E4955', fontFamily:'Avenir', fontWeight: 'bold', fontSize:15}}>YES!</Text>
+            <Text style={{color:'#5E4955', fontFamily:'Avenir', fontWeight: 'bold', fontSize:15}}>+ Receipt</Text>
         </Button>
       </View>
      );
