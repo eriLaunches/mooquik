@@ -74,56 +74,56 @@ class AddView extends Component {
 
   //Sends receipt image that user picks to the Google Cloud Vision OCR API which returns an object with the text
   // Loop through the object to find if it contains "milk", if it does, invoke the postItem function
-  getOCR =  () => {
-  //   let body = {
-  //     "requests": [
-  //       {
-  //         "image": {
-  //           //USE FOR PUBLIC URLS OR GOOGLE CLOUD STORED IMAGES
-  //           // "source": {
-  //           //   "imageUri": "https://firebasestorage.googleapis.com/v0/b/grocerlert.appspot.com/o/milk_receipt_2.jpg?alt=media&token=8c4e577e-14fd-44c5-b56e-7e526eb00257" //image URL
-  //           // }
-  //           "content":this.state.base64
-  //         },
-  //         "features": [
-  //           {
-  //             "type": "TEXT_DETECTION",
-  //             "maxResults": 1
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  //   try {
-  //     let response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`,
-  //      body)
-  //     console.log('GOOGLE', response)
-  //     let OCR_fullTextAnnotation = response.data.responses[0].fullTextAnnotation.text
-  //     console.log('GOOGLE FULL TEXT ANNOT', OCR_fullTextAnnotation)
-  //     let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
-  //     console.log('OCR LOWER CASE:', OCR_lowerCase)
-  //     if (OCR_lowerCase.includes('milk') || OCR_lowerCase.includes('mlk') ) {
-  //         console.log('OCR Found milk')
-  //         this.postItem()
-  //        }
-  //        else {
-  //          alert('No Milk Found On Your Receipt')
-  //        }
-  //  }
-  //  catch (error) {console.log(error)}
+  getOCR = async () => {
+    let body = {
+      "requests": [
+        {
+          "image": {
+            //USE FOR PUBLIC URLS OR GOOGLE CLOUD STORED IMAGES
+            // "source": {
+            //   "imageUri": "https://firebasestorage.googleapis.com/v0/b/grocerlert.appspot.com/o/milk_receipt_2.jpg?alt=media&token=8c4e577e-14fd-44c5-b56e-7e526eb00257" //image URL
+            // }
+            "content":this.state.base64
+          },
+          "features": [
+            {
+              "type": "TEXT_DETECTION",
+              "maxResults": 1
+            }
+          ]
+        }
+      ]
+    }
+    try {
+      let response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`,
+       body)
+      console.log('GOOGLE', response)
+      let OCR_fullTextAnnotation = response.data.responses[0].fullTextAnnotation.text
+      console.log('GOOGLE FULL TEXT ANNOT', OCR_fullTextAnnotation)
+      let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
+      console.log('OCR LOWER CASE:', OCR_lowerCase)
+      if (OCR_lowerCase.includes('milk') || OCR_lowerCase.includes('mlk') ) {
+          console.log('OCR Found milk')
+          this.postItem()
+         }
+         else {
+           alert('No Milk Found On Your Receipt')
+         }
+   }
+   catch (error) {console.log(error)}
 
-    //For Testing: when switching to OCR, put back async and await
-     let OCR_fullTextAnnotation = OCR_RESPONSE.data.responses[0].fullTextAnnotation.text
-     let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
-     console.log('Test_OCR_fullTextAnnotation:', OCR_fullTextAnnotation)
-     console.log('Test_OCR_lowerCase:', OCR_lowerCase)
-     if (OCR_lowerCase.includes('milk')) {
-      console.log('OCR Found milk')
-      this.postItem()
-      this.navigateToListView()
+    // //For Testing: when switching to OCR, put back async and await
+    //  let OCR_fullTextAnnotation = OCR_RESPONSE.data.responses[0].fullTextAnnotation.text
+    //  let OCR_lowerCase = OCR_fullTextAnnotation.toLowerCase()
+    //  console.log('Test_OCR_fullTextAnnotation:', OCR_fullTextAnnotation)
+    //  console.log('Test_OCR_lowerCase:', OCR_lowerCase)
+    //  if (OCR_lowerCase.includes('milk')) {
+    //   console.log('OCR Found milk')
+    //   this.postItem()
+    //   this.navigateToListView()
 
-     }
-     else alert('No Milk Found On Your Receipt')
+    //  }
+    //  else alert('No Milk Found On Your Receipt')
   }
 
 //If Milk is on the receipt, post milk to the Firebase database w/ days til expiration from today's date
