@@ -16,7 +16,6 @@ var milkKiwi = require('./img/milk_kiwi.jpg')
 var milkDonut = require('./img/milk_donut.jpg')
 
 
-const API_KEY = 'AIzaSyBWm5aQTSWyffTokyKlsX03j7d9hIgH7Q0'
 
 //for testing
 let OCR_RESPONSE = {
